@@ -1,21 +1,29 @@
 package com.jael.exercicios.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-public class ConsultarPessoas {
+public class ConsultarPessoas2 {
 
     public static void main(String[] args) throws SQLException {
 
-        Connection conexao = CriarConexao.getConnection();
-        String sql = "SELECT * FROM pessoas WHERE codigo = 1";
+        Scanner entrada = new Scanner(System.in);
 
-        Statement stmt = conexao.createStatement();
-        ResultSet resultado = stmt.executeQuery(sql);
+        Connection conexao = CriarConexao.getConnection();
+        String sql = "SELECT * FROM pessoas WHERE nome LIKE ?";
+
+        System.out.print("Pesquisa: ");
+
+        String pesquisa = entrada.nextLine();
+
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        stmt.setString(1, pesquisa + "%");
+        ResultSet resultado = stmt.executeQuery();
 
         List<Pessoa> pessoas = new ArrayList<>();
 
@@ -31,6 +39,7 @@ public class ConsultarPessoas {
 
         stmt.close();
         conexao.close();
+        entrada.close();
 
     }
 

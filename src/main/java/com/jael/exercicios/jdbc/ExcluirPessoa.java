@@ -57,7 +57,7 @@ public class ExcluirPessoa {
                 stmt = conexao.prepareStatement(delete);
                 stmt.setInt(1, p.getCodigo());
                 stmt.execute();
-                System.out.println("Pessoa deletado com sucesso!");
+                System.out.println("Pessoa deletada com sucesso!");
             } else {
                 System.out.println("Delete cancelado!");
             }
